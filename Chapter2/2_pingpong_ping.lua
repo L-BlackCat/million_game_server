@@ -15,8 +15,16 @@ end
 
 
 skynet.start(function()
+    --[[
+    session：代表消息的唯一id
+    source：代表消息的来源，指发送消息的地址
+    cmd：代表消息名
+    ...:可变参数，内容由skynet.start和skynet.call指定
+    --]]
     skynet.dispatch("lua", function(session, source, cmd, ...)
-      local f = assert(CMD[cmd])
-      f(source,...)
+        --  通过消息的名字`cmd`在`CMD`表中查找对应的处理函数，并将其赋值给变量`f`。如果找不到对应的处理函数，`assert`函数会抛出错误。
+        local f = assert(CMD[cmd])
+        --  调用找到的处理函数，并传递消息的来
+        f(source,...)
     end)
 end)
